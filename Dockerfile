@@ -19,4 +19,4 @@ RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 RUN python manage.py collectstatic --noinput --clear
 
 # gunicorn
-CMD ["gunicorn", "RoastBeats.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "roast_beats.wsgi:application", "--workers", "2", "--threads", "4", "--worker-class", "gthread", "--timeout", "120"]
