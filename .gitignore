@@ -1,0 +1,21 @@
+#--- Python & Django ---
+__pycach__/
+*.pyc
+
+#--- the database ---
+db.sqlite3
+
+#--- Virtual Envirement ---
+.env
+venv/
+
+#--- VS Code Settings ---
+.vscode/
+
+#--- Generated Static Files ---
+staticfiles/
+
+#--- Docker ---
+.dockerignore
+
+.DS_Store
