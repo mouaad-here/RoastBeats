@@ -16,3 +16,4 @@ venv/
 staticfiles/
 
 .DS_Store
+.cache
