@@ -5,6 +5,8 @@ import google.generativeai as genai
 from django.shortcuts import render, redirect
 from spotipy.oauth2 import SpotifyOAuth
 from django.http import JsonResponse 
+from spotipy.cache_handler import MemoryCacheHandler 
+
 
 def get_spotify_oauth():
     """Helper to configure Spotify Auth"""
@@ -13,6 +15,7 @@ def get_spotify_oauth():
         client_secret=os.getenv("SPOTIFY_CLIENT_SECRET"),
         redirect_uri=os.getenv("REDIRECT_URI"),
         scope="user-top-read user-read-private user-read-recently-played",
+        cache_handler=MemoryCacheHandler(),
     )
 
 def get_ai_roast(username, music_profile):
