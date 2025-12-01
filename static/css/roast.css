@@ -47,7 +47,14 @@
 #loading-container {
     padding: 30px 0;
     text-align: center;
-    min-height: 300px; /* Keeps layout stable while loading */
+    min-height: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    padding: 30px 0;
+    text-align: center;
 }
 
 .loading-msg {
@@ -72,14 +79,9 @@
 .vinyl-wrapper {
     width: 140px;
     height: 140px;
-    margin: 0 auto;
     border-radius: 50%;
     padding: 6px;
-    
-    /* OPTION 3: Green to Black Gradient (Spotify Vibe) */
     background: linear-gradient(145deg, #1DB954, #000000);
-    
-    /* Green Glow behind the record */
     box-shadow: 0 5px 30px rgba(29, 185, 84, 0.3);
 }
 
