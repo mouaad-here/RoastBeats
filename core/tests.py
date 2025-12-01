@@ -1,8 +1,9 @@
 import json
-from django.test import TestCase, Client
+from django.test import TestCase, Client, override_settings
 from django.urls import reverse
 from unittest.mock import patch
 
+@override_settings(DEBUG=True)
 class PageLoadTests(TestCase):
     """
     Sanity Checks: Do the URLs actually work?
@@ -27,7 +28,7 @@ class PageLoadTests(TestCase):
         response = self.client.get('/this-url-does-not-exist/')
         self.assertEqual(response.status_code, 404)
 
-
+@override_settings(DEBUG=True)
 class ManualFlowTests(TestCase):
     """
     Test the Manual Input Logic (Session handling & Redirects)
@@ -57,7 +58,7 @@ class ManualFlowTests(TestCase):
         self.assertEqual(session['roast_source'], 'manual')
         self.assertEqual(session['manual_data']['username'], 'Test User')
 
-
+@override_settings(DEBUG=True)
 class ApiTests(TestCase):
     """
     Test the JSON API endpoint.
