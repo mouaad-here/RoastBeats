@@ -70,7 +70,7 @@ WSGI_APPLICATION = 'RoastBeats.wsgi.application'
 
 DATABASES = {
     'default':dj_database_url.config (
-        dafault = 'sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
+        default = 'sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
         conn_max_age=600,
         conn_health_checks=True,
     )

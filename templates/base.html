@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% block extra_css %}{% endblock %}
     <!-- Preload the video -->
-    <link rel="preload" as="video" href="{% static 'video/background.mp4' %}"  type="video/mp4">
+    <link rel="preload" as="video" href="{% static 'video/background-video.mp4' %}"  type="video/mp4">
     
     <!--Logo icon-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
@@ -28,7 +28,7 @@
     
     <!-- Video background -->
     <div class="background-video-container">
-        <video autoplay loop muted playsinline preload  src="{% static 'video/background.mp4' %}" ></video>
+        <video autoplay loop muted playsinline preload  src="{% static 'video/background-video.mp4' %}" ></video>
     </div>
     
     <!-- Nav bar -->
