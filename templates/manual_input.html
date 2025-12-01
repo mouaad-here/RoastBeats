@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}RoastBeats | Manual Input{% endblock %}
+
+{% block content %}
+    <h2>Manual Mode</h2>
+    <!-- Description using the class from CSS -->
+    <p class="manual-description">
+        No Spotify? No problem. Tell us what you listen to.
+    </p>
+    
+    <form method="POST" class="input-group">
+        {% csrf_token %}
+        
+        <!-- Name Field -->
+        <label for="username" class="input-label">Your Name</label>
+        <input type="text" 
+               name="username" 
+               id="username" 
+               class="glass-input" 
+               placeholder="e.g., Mouaad" 
+               required>
+
+        <!-- Music Taste Field -->
+        <label for="music_taste" class="input-label">Describe your taste</label>
+        <textarea name="music_taste" 
+                  id="music_taste" 
+                  class="glass-input glass-textarea" 
+                  rows="5" 
+                  placeholder="e.g. I mainly listen to Taylor Swift, Drake, and occasionally 80s Rock..." 
+                  required></textarea>
+
+        <!-- Actions -->
+        <div class="form-actions">
+            <!-- Submit Button (With Icon Structure) -->
+            <button type="submit" class="btn-spotify">
+                <span class="material-symbols-outlined">local_fire_department</span>
+                Roast Me
+            </button>
+            
+            <!-- Back Button (With Icon Structure) -->
+            <a href="{% url 'index' %}" class="btn-secondary">
+                <span class="material-symbols-outlined">arrow_back</span>
+                Back
+            </a>
+        </div>
+    </form>
+{% endblock %}

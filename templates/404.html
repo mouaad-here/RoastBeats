@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}404 - Lost the Beat{% endblock %}
+
+{% block content %}
+<div class="error-container">
+
+    <h1 class="error-code red-neon">404</h1>
+    
+    <h2 class="error-title">Track Not Found</h2>
+    
+    <p class="error-desc">
+        You wandered off the beat. This page doesn't exist, just like your chances of becoming a famous DJ.
+    </p>
+
+    <span class="material-symbols-outlined error-icon">
+        broken_image
+    </span>
+
+    <a href="{% url 'index' %}" class="btn-spotify">
+        Go Back Home
+    </a>
+</div>
+{% endblock %}

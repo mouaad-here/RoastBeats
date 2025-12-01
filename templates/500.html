@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}500 - System Crash{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <!-- Uses the shared class + the specific GREEN color -->
+    <h1 class="error-code green-neon">500</h1>
+    
+    <h2 class="error-title">System Overload</h2>
+    
+    <p class="error-desc">
+        The AI tried to analyze your music taste but it was too cringe to handle. The server crashed.
+    </p>
+
+    <a href="{% url 'index' %}" class="btn-spotify">
+        Try Again
+    </a>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Your Roast - RoastBeats{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/roast.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <!-- HEADER -->
+    <div class="header-container" style="text-align: center; margin-bottom: 20px;">
+        {% if image %}
+            <img src="{{ image }}" alt="Profile" class="profile-img">
+        {% else %}
+            <img src="https://ui-avatars.com/api/?name={{ username }}" alt="Profile" class="profile-img">
+        {% endif %}
+        
+        <h1 class="username-title">{{ username }}</h1>
+    </div>
+
+    <!-- LOADING STATE -->
+    <!-- CRITICAL: Pass the API URL to JS using data-api-url -->
+    <div id="loading-container" data-api-url="{% url 'roast_api_data' %}">
+        <div class="vinyl-wrapper">
+            <div class="vinyl-record"></div>
+        </div>
+        <h3 id="loading-text" class="loading-msg">Connecting to Spotify...</h3>
+    </div>
+
+    <!-- RESULT STATE -->
+    <div id="result-container" class="hidden">
+        
+        <div class="headline" id="ui-headline"></div>
+        <div class="roast-text" id="ui-roast-body"></div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="score-label">Taste Score</div>
+                <div class="score-value" id="ui-score"></div>
+            </div>
+            <div class="stat-card">
+                <div class="dating-label">Dating Vibe</div>
+                <div class="dating-text" id="ui-dating"></div>
+            </div>
+        </div>
+
+        <br>
+        <a href="{% url 'index' %}" class="retry-link">Roast someone else</a>
+    </div>
+
+{% endblock %}
+
+
+<!-- JAVASCRIPT LOGIC -->
+{% block extra_js %}
+    <script src="{% static 'js/roast.js' %}"></script>
+{% endblock %}
