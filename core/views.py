@@ -13,7 +13,7 @@ def get_spotify_oauth():
     return SpotifyOAuth(
         client_id=os.getenv("SPOTIFY_CLIENT_ID"),
         client_secret=os.getenv("SPOTIFY_CLIENT_SECRET"),
-        redirect_uri=os.getenv("REDIRECT_URI"),
+        redirect_uri=os.getenv("SPOTIFY_REDIRECT_URI"),
         scope="user-top-read user-read-private user-read-recently-played",
         cache_handler=MemoryCacheHandler(),
     )
