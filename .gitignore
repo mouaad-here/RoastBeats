@@ -15,7 +15,4 @@ venv/
 #--- Generated Static Files ---
 staticfiles/
 
-#--- Docker ---
-.dockerignore
-
 .DS_Store
