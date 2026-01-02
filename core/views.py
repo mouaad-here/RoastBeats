@@ -1,9 +1,12 @@
 import os
 import json
 import spotipy
+import requests
+import base64
 import google.generativeai as genai
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from spotipy.oauth2 import SpotifyOAuth
+from .models import Roast
 from django.http import JsonResponse 
 from spotipy.cache_handler import MemoryCacheHandler 
 
@@ -17,6 +20,19 @@ def get_spotify_oauth():
         scope="user-top-read user-read-private user-read-recently-played",
         cache_handler=MemoryCacheHandler(),
     )
+
+def get_image_as_base64(url):
+    """Fetch an image from a URL and return it as a base64 data URI."""
+    if not url:
+        return None
+    try:
+        response = requests.get(url, timeout=5)
+        response.raise_for_status()  # Raise an exception for bad status codes
+        encoded_string = base64.b64encode(response.content).decode('utf-8')
+        return f"data:{response.headers['Content-Type']};base64,{encoded_string}"
+    except (requests.exceptions.RequestException, KeyError) as e:
+        print(f"Error fetching image from URL {url}: {e}")
+        return None
 
 def get_ai_roast(username, music_profile):
     """
@@ -100,23 +116,36 @@ def callback(request):
 def roast_me(request):
     source =request.session.get('roast_source', 'spotify')
     context = {'trigger_ajax': True}
+    image_url = '' # Default value
+    username = '' # Default value
 
     try:
         if source == 'manual':
             data = request.session.get('manual_data', {})
-            context['username'] = data.get('username', 'Anonymous')
-            context['image'] = f"https://ui-avatars.com/api/?name={context['username']}"
+            username = data.get('username', 'Anonymous')
+            image_url = f"https://ui-avatars.com/api/?name={username}"
+            context['username'] = username
+            context['image'] = get_image_as_base64(image_url)
         else:
             token_info = request.session.get('token_info')
             if not token_info:
                 return redirect('index')
             sp = spotipy.Spotify(auth=token_info['access_token'])
             user = sp.current_user()
-            context['username'] = user['display_name']
-            context['image'] = user['images'][0]['url'] if user['images'] else f"https://ui-avatars.com/api/?name={user['display_name']}"
+            username = user['display_name']
+            image_url = user['images'][0]['url'] if user['images'] else f"https://ui-avatars.com/api/?name={username}"
+            context['username'] = username
+            context['image'] = get_image_as_base64(image_url)
+        
+        # Store profile info for API view
+        request.session['profile_info'] = {
+            'username': username,
+            'image_url': image_url 
+        }
         
         return render(request, 'roast.html', context)
-    except:
+    except Exception as e:
+        print(f"Error in roast_me: {e}")
         return redirect('index')
     
 def roast_manual(request):
@@ -133,26 +162,58 @@ def roast_manual(request):
 def roast_api_data(request):
     """Called by Js.It perform the slow work (spotify data + Gemini)"""
     source = request.session.get('roast_source', 'spotify')
-    username = ""
+    profile_info = request.session.get('profile_info', {})
+    username = profile_info.get('username', 'Anonymous')
     music_prompt = ""
+
     try:
         if source == 'manual':
             data = request.session.get('manual_data', {})
-            username = data.get('username')
-            music_prompt = f"{username} input: {data.get('music_input')}"
+            music_prompt = f"User input: {data.get('music_input')}"
         else:
             token_info = request.session.get('token_info')
+            if not token_info: return JsonResponse(fallback_roast()) # Guard clause
             sp = spotipy.Spotify(auth=token_info['access_token'])
             top_artists = sp.current_user_top_artists(limit=10, time_range='medium_term')
             top_tracks = sp.current_user_top_tracks(limit=10, time_range='short_term')
             artist_names = [a['name'] for a in top_artists['items']]
             track_names = [t['name'] for t in top_tracks['items']]
-            username = sp.current_user()['display_name']
             music_prompt = f"Top artists: {(', '.join(artist_names))}, Top tracks: {(', ').join(track_names)}"
         
         ai_response = get_ai_roast(username, music_prompt)
+
+        if not ai_response or 'headline' not in ai_response:
+             return JsonResponse(fallback_roast())
+
+        # Save the roast to the database
+        new_roast = Roast.objects.create(
+            username=username,
+            profile_image_url=profile_info.get('image_url', ''),
+            headline=ai_response.get('headline'),
+            score=ai_response.get('score'),
+            roast_body=ai_response.get('roast_body'),
+            dating_life=ai_response.get('dating_life')
+        )
+        
+        # Add the new roast ID to the response
+        ai_response['roast_id'] = new_roast.id
         
         return JsonResponse(ai_response)
     except Exception as e:
-        print(f"API Error: {e}")
+        print(f"API Error in roast_api_data: {e}")
         return JsonResponse(fallback_roast())
+
+def view_roast(request, roast_id):
+    """Displays a previously generated and saved roast."""
+    roast = get_object_or_404(Roast, id=roast_id)
+    
+    context = {
+        'trigger_ajax': False,
+        'username': roast.username,
+        'image': get_image_as_base64(roast.profile_image_url),
+        'headline': roast.headline,
+        'score': roast.score,
+        'roast_body': roast.roast_body,
+        'dating_life': roast.dating_life,
+    }
+    return render(request, 'roast.html', context)

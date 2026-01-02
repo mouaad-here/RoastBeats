@@ -5,12 +5,14 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/roast.css' %}">
+    <!--  FontAwesome  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 {% endblock %}
 
 {% block content %}
-
     <!-- HEADER -->
-    <div class="header-container" style="text-align: center; margin-bottom: 20px;">
+    <div class="header-container">
         {% if image %}
             <img src="{{ image }}" alt="Profile" class="profile-img">
         {% else %}
@@ -20,38 +22,94 @@
         <h1 class="username-title">{{ username }}</h1>
     </div>
 
-    <!-- LOADING STATE -->
-    <!-- CRITICAL: Pass the API URL to JS using data-api-url -->
+    <!-- DYNAMICALLY LOADED -->
+    {% if trigger_ajax %}
     <div id="loading-container" data-api-url="{% url 'roast_api_data' %}">
         <div class="vinyl-wrapper">
             <div class="vinyl-record"></div>
         </div>
         <h3 id="loading-text" class="loading-msg">Connecting to Spotify...</h3>
     </div>
+    {% endif %}
 
-    <!-- RESULT STATE -->
-    <div id="result-container" class="hidden">
+    <!-- RESULT STATE (can be loaded by ajax or direct render) -->
+    <div id="result-container" class="{% if trigger_ajax %}hidden{% endif %}">
         
-        <div class="headline" id="ui-headline"></div>
-        <div class="roast-text" id="ui-roast-body"></div>
+        <div class="headline" id="ui-headline">{% if headline %}"{{ headline }}"{% endif %}</div>
+        <div class="roast-text" id="ui-roast-body">{% if roast_body %}{{ roast_body|safe }}{% endif %}</div>
 
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="score-label">Taste Score</div>
-                <div class="score-value" id="ui-score"></div>
+                <div class="score-value" id="ui-score">{% if score is not None %}{{ score }}{% endif %}</div>
             </div>
             <div class="stat-card">
                 <div class="dating-label">Dating Vibe</div>
-                <div class="dating-text" id="ui-dating"></div>
+                <div class="dating-text" id="ui-dating">{% if dating_life %}{{ dating_life }}{% endif %}</div>
             </div>
         </div>
 
-        <br>
-        <a href="{% url 'index' %}" class="retry-link">Roast someone else</a>
+        <div class="form-actions">
+            <a href="{% url 'index' %}" class="btn-secondary">Roast Again</a>
+            
+            <!-- Trigger Button -->
+            <button onclick="openShareModal()" class="btn-spotify">
+                <i class="fa-solid fa-share-nodes"></i> Share Result
+            </button>
+        </div>
+
+        <!-- Branding footer for capture -->
+        <div class="capture-footer">
+            RoastBeats
+        </div>
     </div>
 
-{% endblock %}
+    <!-- === SHARE MODAL (Hidden by default) === -->
+<div id="shareModal" class="share-modal-overlay">
+    <div class="share-modal">
+        <h3 class="share-title">Share Your Shame</h3>
+        
+        <!-- 1. IMAGE PREVIEW AREA -->
+        <div id="preview-container">
+            <i id="preview-spinner" class="fa-solid fa-circle-notch fa-spin"></i>
+            <img id="share-preview-img" src="" alt="Roast Preview">
+        </div>
 
+        <p class="share-description">
+            Here is your card. Download it or share the link.
+        </p>
+        
+        <div class="share-grid">
+            <!-- WhatsApp -->
+            <div onclick="handleShareClick('whatsapp')" class="social-btn whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>WhatsApp</span>
+            </div>
+            
+            <!-- X (Twitter) -->
+            <div onclick="handleShareClick('x')" class="social-btn x-brand">
+                <i class="fa-brands fa-x-twitter"></i> <!-- Verified Class -->
+                <span>X</span>
+            </div>
+            
+            <!-- Facebook -->
+            <div onclick="handleShareClick('facebook')" class="social-btn facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+                <span>Facebook</span>
+            </div>
+            
+            <!-- Download Button (Now saves the preview) -->
+            <div onclick="savePreviewImage()" class="social-btn download">
+                <i class="fa-solid fa-download"></i>
+                <span>Save</span>
+            </div>
+        </div>
+
+        <button onclick="closeShareModal()" class="close-modal-btn">Close</button>
+    </div>
+</div>
+
+{% endblock %}
 
 <!-- JAVASCRIPT LOGIC -->
 {% block extra_js %}

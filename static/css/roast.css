@@ -1,211 +1,378 @@
 /* =========================================
-   1. UTILITY CLASSES (Crucial for JS Logic)
+   ROAST SPECIFIC STYLES
    ========================================= */
-.hidden {
-    display: none !important;
-}
 
-.fade-in {
-    animation: fadeInUp 0.8s ease-out forwards;
-}
 
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+/* --- 1. PROFILE IMAGE --- */
 
-/* =========================================
-   2. HEADER & PROFILE (Red Neon Theme)
-   ========================================= */
 .header-container {
     text-align: center;
     margin-bottom: 2rem;
 }
 
 .profile-img {
-    width: 120px;
-    height: 120px;
+    width: 150px; 
+    height: 150px;
     border-radius: 50%;
-    /* OPTION 3: Keep User Profile RED ("The Victim") */
-    border: 3px solid #ff4b4b; 
+    border: 4px solid #ff4b4b; 
     object-fit: cover;
-    margin-bottom: 1rem;
-    box-shadow: 0 0 25px rgba(255, 75, 75, 0.6); 
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0 30px rgba(255, 75, 75, 0.5); 
 }
 
 .username-title {
-    font-size: 2.2rem;
-    font-weight: 800;
-    margin: 0;
-    color: white;
+    font-size: 2.5rem; 
+    font-weight: 900; 
+    color: white; 
     letter-spacing: -1px;
+    margin-top: 10px;
 }
 
-/* =========================================
-   3. LOADING STATE (Option 3: Mixed Theme)
-   ========================================= */
+
+/* --- 2. LOADING STATE --- */
+
 #loading-container {
-    padding: 30px 0;
-    text-align: center;
-    min-height: 800px;
-    display: flex;
+    min-height: 400px;
+    display: flex; 
     flex-direction: column;
-    justify-content: center;
+    justify-content: center; 
     align-items: center;
-    
-    padding: 30px 0;
-    text-align: center;
-}
-
-.loading-msg {
-    /* OPTION 3: White text with Green Glow */
-    color: #ffffff; 
-    font-family: 'Inter', sans-serif;
-    font-size: 1.1rem;
-    margin-top: 25px;
-    letter-spacing: 1px;
-    
-    /* Green text shadow */
-    text-shadow: 0 0 15px rgba(29, 185, 84, 0.8);
-    
-    animation: pulseText 1.5s infinite alternate;
-}
-
-@keyframes pulseText {
-    from { opacity: 0.6; }
-    to { opacity: 1; }
 }
 
 .vinyl-wrapper {
-    width: 140px;
+    width: 140px; 
     height: 140px;
-    border-radius: 50%;
+    border-radius: 50%; 
     padding: 6px;
     background: linear-gradient(145deg, #1DB954, #000000);
     box-shadow: 0 5px 30px rgba(29, 185, 84, 0.3);
 }
 
 .vinyl-record {
-    width: 100%;
+    width: 100%; 
     height: 100%;
     border-radius: 50%;
     border: 2px solid #1a1a1a;
     background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/b6/12in-Vinyl-LP-Record-Angle.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-size: cover; 
+    background-position: center; 
     animation: spinVinyl 2s linear infinite;
 }
 
-@keyframes spinVinyl {
-    100% { transform: rotate(360deg); }
+@keyframes spinVinyl { 100% { transform: rotate(360deg); } }
+
+.loading-msg {
+    margin-top: 25px; 
+    color: white;
+    font-size: 1.2rem; 
+    text-shadow: 0 0 10px #1DB954;
+    animation: pulse 1s infinite alternate;
 }
 
-/* =========================================
-   4. ROAST RESULTS (Green Neon Theme)
-   ========================================= */
+@keyframes pulse { from { opacity: 0.7; } to { opacity: 1; } }
+
+
+/* --- 3. ROAST CARD CONTENT --- */
+
 .headline {
-    font-size: 1.4rem;
+    font-size: 1.5rem; 
     font-weight: 700;
-    color: white;
-    opacity: 0.9;
-    margin-bottom: 30px;
+    color: white; 
+    margin-bottom: 25px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
     text-align: center;
 }
 
 .roast-text {
-    font-size: 1.1rem;
+    font-size: 1.1rem; 
     line-height: 1.7;
-    text-align: left;
-    color: #e0e0e0;
-    
-    /* Green Glow Container */
-    background: rgba(10, 10, 10, 0.6);
-    border: 1px solid #1DB954; /* Spotify Green */
-    box-shadow: 0 0 15px rgba(29, 185, 84, 0.25), inset 0 0 20px rgba(29, 185, 84, 0.05);
-    
-    padding: 25px;
-    border-radius: 16px;
+    text-align: left; 
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #ffffff;
+    padding: 25px; 
+    border-radius: 16px; 
     margin-bottom: 30px;
+    border-color: #1DB954;
+    box-shadow: 0 0 20px rgba(29, 185, 84, 0.4);
+    outline: none;
 }
 
-/* =========================================
-   5. STATS GRID (Score & Dating)
-   ========================================= */
-.stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Two equal columns */
-    gap: 15px;
-    margin-bottom: 25px;
+.stats-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px; 
+    margin-bottom: 25px; 
 }
 
 .stat-card {
-    background: rgba(255, 255, 255, 0.03);
-    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px; 
     border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.05);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex; 
+    flex-direction: column; 
     align-items: center;
-    min-height: 140px;
+    justify-content: center;
 }
 
-/* Score Typography */
-.score-label {
-    text-transform: uppercase;
+.score-label, .dating-label {
+    text-transform: uppercase; 
     font-size: 0.8rem;
-    color: #888;
+    color: #bbb; 
     letter-spacing: 1.5px;
-    font-weight: 600;
+    font-weight: 600; 
     margin-bottom: 5px;
 }
 
 .score-value {
-    font-size: 4rem;
-    font-weight: 900;
+    font-size: 4.5rem; 
+    font-weight: 900; 
+    color: #ff4b4b; 
+    text-shadow: 0 0 30px rgba(255, 75, 75, 0.6);
     line-height: 1;
-    color: #ff4b4b; /* Red Text */
-    text-shadow: 0 0 25px rgba(255, 75, 75, 0.4); /* Red Glow */
-}
-
-/* Dating Vibe Typography */
-.dating-label {
-    font-size: 1rem;
-    color: #aaa;
-    margin-bottom: 10px;
 }
 
 .dating-text {
-    font-weight: 700;
-    color: #ffcc00; /* Yellow Text */
-    font-size: 1.1rem;
-    line-height: 1.3;
+    font-weight: 700; 
+    color: #ffcc00;
+    font-size: 1.1rem; 
     text-align: center;
 }
+
+
+/* --- 4. SHARE MODAL --- */
+
+.share-modal-overlay {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: none; 
+    justify-content: center; 
+    align-items: center;
+    padding: 1rem;
+    border-radius: 24px;
+}
+
+.share-modal {
+    background: #111; 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem; 
+    border-radius: 24px;
+    width: 90%; 
+    max-width: 450px; 
+    text-align: center;
+}
+
+.share-title {
+    font-family: 'Space Grotesk', sans-serif;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.share-description {
+    color: #999;
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+}
+
+#preview-container {
+    width: 100%;
+    background: #000;
+    border: 1px solid #333;
+    border-radius: 10px;
+    margin: 15px 0;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    overflow: hidden;
+}
+
+#share-preview-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: none;
+}
+
+#preview-spinner { 
+    font-size: 2.5rem; 
+    color: #1DB954; 
+}
+
+.share-grid { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 10px; 
+    margin-top: 15px;
+}
+
+.social-btn { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 5px; 
+    color: #ccc; 
+    font-size: 0.75rem; 
+    cursor: pointer; 
+}
+
+.social-btn:hover { 
+    color: white; 
+}
+
+.social-btn i { 
+    width: 50px; 
+    height: 50px; 
+    border-radius: 50%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-size: 1.3rem; 
+    color: white; 
+    margin-bottom: 5px; 
+}
+
+.whatsapp i { background: #25D366; }
+.x-brand i { background: #000; border: 1px solid #333; }
+.facebook i { background: #1877F2; }
+.download i { background: linear-gradient(135deg, #FF512F, #DD2476); }
+
+.close-modal-btn { 
+    background: transparent; 
+    border: 1px solid #B3B3B3; 
+    color: white; 
+    padding: 10px 30px; 
+    border-radius: 30px; 
+    cursor: pointer; 
+    margin-top: 15px; 
+    font-weight: 600; 
+}
+
+.close-modal-btn:hover { 
+    background: white; 
+    color: black; 
+}
+
 
 /* =========================================
-   6. FOOTER / LINKS
+   5. CAPTURE MODE
    ========================================= */
-.retry-link {
-    display: block; /* Centered block */
+
+.glass-card.capture-mode {
+    position: relative !important; 
+    z-index: 10 !important;
+    width: 540px !important;
+    max-width: 540px !important;
+    height: 960px !important;
+    background: #121212 !important;
+    border: none !important;
+    border-radius: 24px !important;
+    padding: 30px !important;
+    overflow: hidden !important;
+    margin: 0 auto !important;
+    transform: none !important;
+}
+
+.capture-mode h1, 
+.capture-mode h2, 
+.capture-mode p, 
+.capture-mode div { 
+    color: #ffffff !important; 
+    text-shadow: none !important; 
+}
+
+.capture-mode .profile-img {
+    width: 100px !important;
+    height: 100px !important;
+    margin-bottom: 1rem !important;
+}
+
+.capture-mode .username-title {
+    font-size: 2rem !important;
+    margin-top: 5px !important;
+}
+
+.capture-mode .headline {
+    font-size: 1.2rem !important;
+    margin-bottom: 20px !important;
+}
+
+.capture-mode .roast-text {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    padding: 20px !important;
+    margin-bottom: 20px !important;
+}
+
+.capture-mode .stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    margin-bottom: 20px !important;
+}
+
+.capture-mode .score-value {
+    font-size: 3.5rem !important;
+    color: #ff4b4b !important;
+}
+
+.capture-mode .dating-text {
+    font-size: 0.9rem !important;
+    color: #ffcc00 !important;
+}
+
+.capture-mode .capture-footer {
+    margin-top: 20px !important;
+    font-size: 0.8rem !important;
+}
+
+.capture-mode .form-actions { 
+    display: none !important; 
+}
+
+.capture-mode #shareModal { 
+    display: none !important; 
+}
+
+/* Branding footer for capture */
+.capture-footer {
+    display: none;
+}
+.capture-mode .capture-footer {
+    display: block !important;
     text-align: center;
-    margin-top: 10px;
-    color: #b3b3b3;
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: color 0.2s, text-shadow 0.2s;
-    padding-bottom: 20px;
+    margin-top: 30px;
+    font-weight: 600;
+    color: #aaa !important;
 }
 
-.retry-link:hover {
-    color: white;
-    text-shadow: 0 0 8px rgba(255,255,255,0.5);
-}
 
-/* Mobile Responsiveness */
+/* =========================================
+   6. RESPONSIVENESS
+   ========================================= */
+
 @media (max-width: 600px) {
     .stats-grid {
-        grid-template-columns: 1fr; /* Stack cards vertically on mobile */
+        grid-template-columns: 1fr;
+    }
+
+    .profile-img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .username-title {
+        font-size: 2rem;
+    }
+
+    .score-value {
+        font-size: 3.5rem;
     }
 }

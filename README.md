@@ -13,6 +13,8 @@
 *   **AI Engine:** Powered by **Google Gemini 2.5 Flash** for high-speed, savage roasts.
 *   **Viral Share Cards**: Users can download a generated image for thier roast (via `html2canvas`) or share directly to  Socail-media using a custom-built in share modal.
 *   **Production Ready:** configured with `WhiteNoise` for static files and `dj-database-url`.
+*   **Permalink Sharing:** Each roast now has a unique, shareable link (permalink) for direct access to specific results.
+*   **Enhanced Image Sharing:** Implemented Web Share API for direct image sharing on mobile; desktop shares the permalink. Includes off-screen screenshotting for a seamless experience, with improved generated image design (profile image, styling, and border).
 
 ## Project Structure
 ```bash
